@@ -1,0 +1,21 @@
+PRO RANDOM_WALK
+
+MOSQUITO_MOV = FLTARR(50)
+MOSQUITO_IND = FLTARR(50)
+Seed = LONG(SYSTIME(1))
+; POUR MGIRATION A RETENIR: 49 EST INCLUS!
+MOSQUITO_MOV[0] = 0
+FOR I=1,49 DO BEGIN
+N = RANDOMU(Seed)
+IF (N LT 0.5) THEN BEGIN ; remarque: on utilise LT pour une comparaison Lower Than!! and not "<" classic operator!
+MOSQUITO_MOV[I] = MOSQUITO_MOV[I-1] + 1 ; +1 un bruit discret
+ENDIF ELSE BEGIN
+MOSQUITO_MOV[I] = MOSQUITO_MOV[I-1] - 1 ; -1 c'est un bruit discret
+ENDELSE
+MOSQUITO_IND[I] = I
+ENDFOR
+
+PLOT,MOSQUITO_IND,MOSQUITO_MOV
+END
+
+
