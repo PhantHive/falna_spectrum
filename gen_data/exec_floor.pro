@@ -17,7 +17,7 @@ END
 FUNCTION CALC_NB_ENEMIES, CUR_FLOOR, PREV_ENEMIES
 
 	MAX_ENEMIES = 1000
-	FLOOR_ENEMIES =  PREV_ENEMIES + CUR_FLOOR * 5 ; Even when Bell comes back to precedent floor, enemies amount becomes higher, all floor get harder when re-visiting
+	FLOOR_ENEMIES =  PREV_ENEMIES + ALOG(CUR_FLOOR * 5)/4 ; Even when Bell comes back to precedent floor, enemies amount becomes higher, all floor get harder when re-visiting
 	
 	IF (FLOOR_ENEMIES GT MAX_ENEMIES) THEN BEGIN
 		RETURN, MAX_ENEMIES
