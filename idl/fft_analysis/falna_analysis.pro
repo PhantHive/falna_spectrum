@@ -1,7 +1,7 @@
 @fft.pro
 
 PRO FALNA_ANALYSIS
-	DATA = MRDFITS('E:\PROG\15-IDL\falna_spectrum\idl\gen_data\dataset\bell_runs.fits', 1)
+	DATA = MRDFITS('E:\PROG\15-IDL\falna_spectrum\idl\gen_data\dataset\bell_runs-idl.fits', 1)
 	
 	fatigue_amplitudes = AMPLITUDE(DATA.fatigue)
 	floor_amplitudes = AMPLITUDE(DATA.floor)
@@ -14,7 +14,7 @@ PRO FALNA_ANALYSIS
 	
 	; save fatigue FFT
     SET_PLOT, 'PS'
-    DEVICE, FILENAME='E:\PROG\15-IDL\falna_spectrum\idl\fft_analysis\spectrum\fatigue_fft.ps', /COLOR, XSIZE=25, YSIZE=12, /LANDSCAPE
+    DEVICE, FILENAME='E:\PROG\15-IDL\falna_spectrum\idl\fft_analysis\spectrum\fatigue_fft-idl.ps', /COLOR, XSIZE=25, YSIZE=12, /LANDSCAPE
     PLOT, X[0:499], fatigue_amplitudes[0:499], $
     TITLE='Fatigue FFT Spectrum', $
     XTITLE='Frequency k', $
@@ -26,7 +26,7 @@ PRO FALNA_ANALYSIS
 
     ; save floor FFT
     SET_PLOT, 'PS'
-    DEVICE, FILENAME='E:\PROG\15-IDL\falna_spectrum\idl\fft_analysis\spectrum\floor_fft.ps', /COLOR, XSIZE=25, YSIZE=12, /LANDSCAPE
+    DEVICE, FILENAME='E:\PROG\15-IDL\falna_spectrum\idl\fft_analysis\spectrum\floor_fft-idl.ps', /COLOR, XSIZE=25, YSIZE=12, /LANDSCAPE
     PLOT, X[0:499], floor_amplitudes[0:499], $
     TITLE='Floor FFT Spectrum', $
     XTITLE='Frequency k', $
