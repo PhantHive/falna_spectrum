@@ -13,6 +13,7 @@ from astropy.io import fits
 from numpy.random import Generator
 
 from python.gen_data.calc_fatigue import compute_fatigue
+from python.gen_data.calc_floor import compute_floor
 
 
 def gen_test_data() -> None:
@@ -41,7 +42,7 @@ def gen_test_data() -> None:
     for i in range(1, total_runs):
         # have to create compute_fatigue, compute_floor, calc_xp_earnt, calc_nb_enemies and calc_time_taken
         fatigue_lvl[i] = compute_fatigue(rng, int(floors[i-1]), float(fatigue_lvl[i-1])) # casting to int and float (type expected different from type numpy.int16 and numpy.float32)
-
+        floors[i] = compute_floor(rng, int(floors[i-1]), float(fatigue_lvl[i-1]))
         pass
 
     # I => int16, K => int64, E=> float32, D => float64
