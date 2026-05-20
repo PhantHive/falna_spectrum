@@ -41,9 +41,11 @@ def gen_test_data() -> None:
     timestamps[0] = base_time
 
     for i in range(1, total_runs):
+        run_ids[i] = i
+
         # have to create compute_fatigue, compute_floor, calc_xp_earnt, calc_nb_enemies and calc_time_taken
         fatigue_lvl[i] = compute_fatigue(rng, int(floors[i-1]), float(fatigue_lvl[i-1])) # casting to int and float (type expected different from type numpy.int16 and numpy.float32)
-        floors[i] = compute_floor(rng, int(floors[i-1]), float(fatigue_lvl[i-1]))
+        floors[i] = compute_floor(rng, int(floors[i-1]), float(fatigue_lvl[i]))
         exp_gain[i] = calc_xp_earnt(rng, int(floors[i]))
         enemies_killed[i] = calc_nb_enemies(int(floors[i]), int(enemies_killed[i-1]))
         times_taken[i] = calc_time_taken(base_time, int(floors[i]), float(fatigue_lvl[i]), int(enemies_killed[i]))
@@ -56,14 +58,16 @@ def gen_test_data() -> None:
         fits.Column(name='floor', format='I', array=floors),
         fits.Column(name='exp_gain', format='E', array=exp_gain),
         fits.Column(name='enemies', format='K', array=enemies_killed),
-        fits.Column(name='times_taken', format='D', array=times_taken),
-        fits.Column(name='fatigue_lvl', format='E', array=fatigue_lvl),
-        fits.Column(name='timestamps', format='D', array=timestamps)
+        fits.Column(name='time_taken', format='D', array=times_taken),
+        fits.Column(name='fatigue', format='E', array=fatigue_lvl),
+        fits.Column(name='timestamp', format='D', array=timestamps)
     ])
 
     hdu = fits.BinTableHDU.from_columns(cols)
     hdu.header['PROJECT'] = 'Falna Spectrum'
     hdu.header['FAMILY'] = 'Hestia'
-    hdu.writeto('dataset/bell_runs.fits', overwrite=True)
+    hdu.writeto('dataset/bell_runs-py.fits', overwrite=True)
+
+gen_test_data()
 
 

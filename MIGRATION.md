@@ -20,7 +20,8 @@ It means that for instance, if I have a `UV SPECTRA` column depending on observa
 Only BinTableHDU allow such an asymetric format.
 
 ## 3. Moving on to static seed
-Static seed will allow perfect comparison between py and idl
+Static seed will allow perfect comparison between py and idl.
+Well seems I was wrong since random generation number is different between IDL and numpy.
 
 ## Function Equivalences
 
@@ -51,3 +52,4 @@ Static seed will allow perfect comparison between py and idl
 | Random seed | Modified in-place by GDL, shared across calls | `np.random.seed()` set once globally or use `rng = np.random.default_rng(seed)` |
 | Integer division | Must force `/10.0` explicitly | Use `//` for int division, `/` always returns float |
 | FOR loop bounds | `FOR I=0,24` → 25 iterations (inclusive) | `range(0, 25)` → 25 iterations (exclusive end) |
+

@@ -60,6 +60,8 @@ PRO GEN_TEST_DATA
 		DATA_TO_FITS[I] = {bell_runs, run_id: RUN_IDS[I], floor: FLOORS[I], exp_gain: EXP_GAIN[I], enemies: ENEMIES_KILLED[I], time_taken: TIMES_TAKEN[I], fatigue: FATIGUE_LVL[I], timestamp: TIMESTAMPS[I]}
 	ENDFOR
 	
+	PRINT, DATA_TO_FITS[1].fatigue
+	
 	; DATA TO FITS
 	HELP, DATA_TO_FITS[1]
 	MWRFITS, DATA_TO_FITS, 'E:\PROG\15-IDL\falna_spectrum\idl\gen_data\dataset\bell_runs-idl.fits', /CREATE
