@@ -13,6 +13,12 @@ A local archive has been made out of the repo falna_spectrum/
 | FITS schema is defined by structures          | FITS schema is implicitly defined by the arrays |
 | Types indicated at structure level (0L, 0.0D) | Types defined from numpy arrays                 |
 
+> Why we use `BinTableHDU` instead of `Table` from the same astropy library
+
+After careful research, I have noticed that BinTableHDU allows for one column to have a "PE\()" format.
+It means that for instance, if I have a `UV SPECTRA` column depending on observation timing issues and stuff, the number of points in the array could be different from row to row.
+Only BinTableHDU allow such an asymetric format.
+
 ## Function Equivalences
 
 | IDL/GDL | Python | Notes                                                   |

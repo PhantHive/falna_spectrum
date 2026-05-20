@@ -50,6 +50,8 @@ def gen_test_data() -> None:
     ])
 
     hdu = fits.BinTableHDU.from_columns(cols)
+    hdu.header['PROJECT'] = 'Falna Spectrum',
+    hdu.header['FAMILY'] = 'Hestia'
     hdu.writeto('dataset/bell_runs.fits', overwrite=True)
 
 
