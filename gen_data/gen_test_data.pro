@@ -22,13 +22,13 @@ PRO GEN_TEST_DATA
 	BASE_TIME = 10 * 60 * 1000 ; 10 minutes in ms
 	
 	; DATA FOR CSV
-	RUN_IDS = FLTARR(1000)
-	FLOORS = FLTARR(1000)
+	RUN_IDS = LONARR(1000)
+	FLOORS = INTARR(1000)
 	EXP_GAIN = FLTARR(1000)
-	ENEMIES_KILLED = FLTARR(1000)
-	TIMES_TAKEN = FLTARR(1000)
+	ENEMIES_KILLED = LONARR(1000)
+	TIMES_TAKEN = DBLARR(1000)
 	FATIGUE_LVL = FLTARR(1000)
-	TIMESTAMPS = FLTARR(1000)
+	TIMESTAMPS = DBLARR(1000)
 	
 	FLOORS[0] = 0 ; init 
 	FATIGUE_LVL[0] = 1 ; init
@@ -37,7 +37,17 @@ PRO GEN_TEST_DATA
 	TIMESTAMPS[0] = BASE_TIME
 	
 	; Struct IDL to prepare FITS
-	DATA_TO_FITS = REPLICATE({bell_runs, run_id: RUN_IDS[0], floor: FLOORS[0], exp_gain: EXP_GAIN[0], enemies: ENEMIES_KILLED[0], time_taken: TIMES_TAKEN[0], fatigue: FATIGUE_LVL[0], timestamp: TIMESTAMPS[0]}, 1000)
+	; 0S => INT 16-bits, 0L => LONG 32-bit, 0.0 => FLOAT 32-bit, 0.0D => DOUBLE 64 BIT
+	DATA_TO_FITS = REPLICATE({bell_runs, $
+	    run_id:    0L,   $
+	    floor:     0S,   $
+	    exp_gain:  0.0,  $
+	    enemies:   0L,   $
+	    time_taken: 0.0D, $
+	    fatigue:   0.0,  $
+	    timestamp: 0.0D  $
+	}, 1000)
+	DATA_TO_FITS[0] = {bell_runs, run_id: RUN_IDS[0], floor: FLOORS[0], exp_gain: EXP_GAIN[0], enemies: ENEMIES_KILLED[0], time_taken: TIMES_TAKEN[0], fatigue: FATIGUE_LVL[0], timestamp: TIMESTAMPS[0]}
 	
 	FOR I=1,999 DO BEGIN
 		RUN_IDS[I] = I ; RUN ID
@@ -54,7 +64,8 @@ PRO GEN_TEST_DATA
 	ENDFOR
 	
 	; DATA TO FITS
-	MWRFITS, DATA_TO_FITS, 'E:\PROG\15-IDL\falna_spectrum\gen_data\dataset\bell_runs.fits'
+	HELP, DATA_TO_FITS[1]
+	MWRFITS, DATA_TO_FITS, 'E:\PROG\15-IDL\falna_spectrum\gen_data\dataset\bell_runs.fits', /CREATE
 	
 	; DATA TO CSV
 	;OPENW, LUN, 'E:\PROG\15-IDL\falna_spectrum\gen_data\dataset\bell_runs.csv', /GET_LUN
