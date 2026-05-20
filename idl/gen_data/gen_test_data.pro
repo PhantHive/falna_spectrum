@@ -62,7 +62,7 @@ PRO GEN_TEST_DATA
 	
 	; DATA TO FITS
 	HELP, DATA_TO_FITS[1]
-	MWRFITS, DATA_TO_FITS, 'E:\PROG\15-IDL\falna_spectrum\gen_data\dataset\bell_runs.fits', /CREATE
+	MWRFITS, DATA_TO_FITS, 'E:\PROG\15-IDL\falna_spectrum\idl\gen_data\dataset\bell_runs-idl.fits', /CREATE
 	
 	; DATA TO CSV
 	;OPENW, LUN, 'E:\PROG\15-IDL\falna_spectrum\gen_data\dataset\bell_runs.csv', /GET_LUN

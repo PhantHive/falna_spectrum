@@ -43,6 +43,7 @@ def gen_test_data() -> None:
         # have to create compute_fatigue, compute_floor, calc_xp_earnt, calc_nb_enemies and calc_time_taken
         fatigue_lvl[i] = compute_fatigue(rng, int(floors[i-1]), float(fatigue_lvl[i-1])) # casting to int and float (type expected different from type numpy.int16 and numpy.float32)
         floors[i] = compute_floor(rng, int(floors[i-1]), float(fatigue_lvl[i-1]))
+        exp_gain[i]
         pass
 
     # I => int16, K => int64, E=> float32, D => float64
