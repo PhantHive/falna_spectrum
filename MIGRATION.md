@@ -19,6 +19,9 @@ After careful research, I have noticed that BinTableHDU allows for one column to
 It means that for instance, if I have a `UV SPECTRA` column depending on observation timing issues and stuff, the number of points in the array could be different from row to row.
 Only BinTableHDU allow such an asymetric format.
 
+## 3. Moving on to static seed
+Static seed will allow perfect comparison between py and idl
+
 ## Function Equivalences
 
 | IDL/GDL | Python | Notes                                                   |

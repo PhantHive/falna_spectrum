@@ -10,11 +10,14 @@
 import time
 import numpy as np
 from astropy.io import fits
+from numpy.random import Generator
+
 
 def gen_test_data() -> None:
 
     total_runs: int = 1000
-    data_seed: float = time.time()
+    data_seed: int = 50
+    rng: Generator = np.random.default_rng(data_seed)
     base_time: int = 10 * 60 * 1000 # 10 min in ms
 
     # DATA FOR CSV
@@ -50,7 +53,7 @@ def gen_test_data() -> None:
     ])
 
     hdu = fits.BinTableHDU.from_columns(cols)
-    hdu.header['PROJECT'] = 'Falna Spectrum',
+    hdu.header['PROJECT'] = 'Falna Spectrum'
     hdu.header['FAMILY'] = 'Hestia'
     hdu.writeto('dataset/bell_runs.fits', overwrite=True)
 
