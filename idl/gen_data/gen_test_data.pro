@@ -15,7 +15,7 @@
 
 PRO GEN_TEST_DATA
 	TOTAL_RUNS = 1000
-	DATA_SEED = LONG(SYSTIME(1))
+	DATA_SEED = 50
 	BASE_TIME = 10 * 60 * 1000 ; 10 minutes in ms
 	
 	; DATA FOR CSV
@@ -60,9 +60,11 @@ PRO GEN_TEST_DATA
 		DATA_TO_FITS[I] = {bell_runs, run_id: RUN_IDS[I], floor: FLOORS[I], exp_gain: EXP_GAIN[I], enemies: ENEMIES_KILLED[I], time_taken: TIMES_TAKEN[I], fatigue: FATIGUE_LVL[I], timestamp: TIMESTAMPS[I]}
 	ENDFOR
 	
+	PRINT, DATA_TO_FITS[1].fatigue
+	
 	; DATA TO FITS
 	HELP, DATA_TO_FITS[1]
-	MWRFITS, DATA_TO_FITS, 'E:\PROG\15-IDL\falna_spectrum\gen_data\dataset\bell_runs.fits', /CREATE
+	MWRFITS, DATA_TO_FITS, 'E:\PROG\15-IDL\falna_spectrum\idl\gen_data\dataset\bell_runs-idl.fits', /CREATE
 	
 	; DATA TO CSV
 	;OPENW, LUN, 'E:\PROG\15-IDL\falna_spectrum\gen_data\dataset\bell_runs.csv', /GET_LUN
