@@ -1,0 +1,11 @@
+FUNCTION TO_FFT, arr
+	arr_detrend = arr - MEAN(arr)
+	SIGNAL = FFT(arr_detrend)
+	;SIGNAL = FFT(arr)
+	RETURN, SIGNAL
+END
+
+FUNCTION AMPLITUDE, arr
+	COMPLEX_SIGNAL = TO_FFT(arr)
+	RETURN, ABS(COMPLEX_SIGNAL)
+END
