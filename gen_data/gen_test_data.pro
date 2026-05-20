@@ -13,6 +13,9 @@
 @calc_floor.pro
 @exec_floor.pro
 
+;astrolib
+@mwrfits.pro
+
 PRO GEN_TEST_DATA
 	TOTAL_RUNS = 1000
 	DATA_SEED = LONG(SYSTIME(1))
@@ -33,6 +36,9 @@ PRO GEN_TEST_DATA
 	TIMES_TAKEN[0] = BASE_TIME
 	TIMESTAMPS[0] = BASE_TIME
 	
+	; Struct IDL to prepare FITS
+	DATA_TO_FITS = REPLICATE({bell_runs, run_id: RUN_IDS[0], floor: FLOORS[0], exp_gain: EXP_GAIN[0], enemies: ENEMIES_KILLED[0], time_taken: TIMES_TAKEN[0], fatigue: FATIGUE_LVL[0], timestamp: TIMESTAMPS[0]}, 1000)
+	
 	FOR I=1,999 DO BEGIN
 		RUN_IDS[I] = I ; RUN ID
 		
@@ -43,14 +49,19 @@ PRO GEN_TEST_DATA
 		ENEMIES_KILLED[I] = CALC_NB_ENEMIES(FLOORS[I], ENEMIES_KILLED[I-1])
 		TIMES_TAKEN[I] = CALC_TIME_TAKEN(BASE_TIME, FLOORS[I], FATIGUE_LVL[I], ENEMIES_KILLED[I])
 		TIMESTAMPS[I] = TIMESTAMPS[I-1] + TIMES_TAKEN[I] + 86400000
+		
+		DATA_TO_FITS[I] = {bell_runs, run_id: RUN_IDS[I], floor: FLOORS[I], exp_gain: EXP_GAIN[I], enemies: ENEMIES_KILLED[I], time_taken: TIMES_TAKEN[I], fatigue: FATIGUE_LVL[I], timestamp: TIMESTAMPS[I]}
 	ENDFOR
 	
+	; DATA TO FITS
+	MWRFITS, DATA_TO_FITS, 'E:\PROG\15-IDL\falna_spectrum\gen_data\dataset\bell_runs.fits'
+	
 	; DATA TO CSV
-	OPENW, LUN, 'E:\PROG\15-IDL\falna_spectrum\gen_data\dataset\bell_runs.csv', /GET_LUN
-		PRINTF, LUN, 'run_id, floor, exp_gain, enemies, time_taken, fatigue, timestamp' ; header
-		FOR I=0,999 DO BEGIN
-			PRINTF, LUN, RUN_IDS[I], FLOORS[I], EXP_GAIN[I], ENEMIES_KILLED[I], TIMES_TAKEN[I], FATIGUE_LVL[I], TIMESTAMPS[I], FORMAT='(I0, ",", I0, ",", F0, ",", I0, ",", F0, ",", I0, ",", F0)'
-		ENDFOR
-	CLOSE, LUN
-	FREE_LUN, LUN
+	;OPENW, LUN, 'E:\PROG\15-IDL\falna_spectrum\gen_data\dataset\bell_runs.csv', /GET_LUN
+	;	PRINTF, LUN, 'run_id,floor,exp_gain,enemies,time_taken,fatigue,timestamp' ; header
+	;	FOR I=0,999 DO BEGIN
+	;		PRINTF, LUN, RUN_IDS[I], FLOORS[I], EXP_GAIN[I], ENEMIES_KILLED[I], TIMES_TAKEN[I], FATIGUE_LVL[I], TIMESTAMPS[I], FORMAT='(I0, ",", I0, ",", F0, ",", I0, ",", F0, ",", I0, ",", F0)'
+	;	ENDFOR
+	;CLOSE, LUN
+	;FREE_LUN, LUN
 END
