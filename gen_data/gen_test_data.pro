@@ -13,9 +13,6 @@
 @calc_floor.pro
 @exec_floor.pro
 
-;astrolib
-@mwrfits.pro
-
 PRO GEN_TEST_DATA
 	TOTAL_RUNS = 1000
 	DATA_SEED = LONG(SYSTIME(1))

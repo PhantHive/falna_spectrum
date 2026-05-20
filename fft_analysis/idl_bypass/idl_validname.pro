@@ -1,0 +1,3 @@
+FUNCTION IDL_VALIDNAME, name, _EXTRA=extra
+  RETURN, name
+END
