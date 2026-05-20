@@ -14,6 +14,7 @@ from numpy.random import Generator
 
 from python.gen_data.calc_fatigue import compute_fatigue
 from python.gen_data.calc_floor import compute_floor
+from python.gen_data.exec_floor import calc_xp_earnt, calc_nb_enemies, calc_time_taken
 
 
 def gen_test_data() -> None:
@@ -43,8 +44,10 @@ def gen_test_data() -> None:
         # have to create compute_fatigue, compute_floor, calc_xp_earnt, calc_nb_enemies and calc_time_taken
         fatigue_lvl[i] = compute_fatigue(rng, int(floors[i-1]), float(fatigue_lvl[i-1])) # casting to int and float (type expected different from type numpy.int16 and numpy.float32)
         floors[i] = compute_floor(rng, int(floors[i-1]), float(fatigue_lvl[i-1]))
-        exp_gain[i]
-        pass
+        exp_gain[i] = calc_xp_earnt(rng, int(floors[i]))
+        enemies_killed[i] = calc_nb_enemies(int(floors[i]), int(enemies_killed[i-1]))
+        times_taken[i] = calc_time_taken(base_time, int(floors[i]), float(fatigue_lvl[i]), int(enemies_killed[i]))
+        timestamps[i] = timestamps[i-1] + times_taken[i] + 86400000
 
     # I => int16, K => int64, E=> float32, D => float64
     # Personal note: below is the low-level code to make the table. An easiest implementation exists with astropy.table
