@@ -3,7 +3,8 @@ from numpy.random import Generator
 
 def calc_xp_earnt(rng: Generator, cur_floor: int) -> float:
     xp_max = 999
-    xp = xp_max * np.log(cur_floor + 1) / np.log(51)
+    xp_min = 10
+    xp = xp_min + (xp_max - xp_min) * np.log(cur_floor + 1) / np.log(51)
 
     jump_chance = 0.02
     rand = rng.uniform()
@@ -15,7 +16,7 @@ def calc_xp_earnt(rng: Generator, cur_floor: int) -> float:
 
 def calc_nb_enemies(cur_floor: int, prev_enemies: int) -> float:
     max_enemies = 1000
-    floor_enemies = prev_enemies + np.log(cur_floor * 5) / 4
+    floor_enemies = prev_enemies + np.log(cur_floor * 5 + 1) / 4
 
     if floor_enemies > max_enemies:
         return max_enemies
@@ -23,5 +24,5 @@ def calc_nb_enemies(cur_floor: int, prev_enemies: int) -> float:
     return floor_enemies
 
 def calc_time_taken(base_time: float, cur_floor: int, fatigue: float, enemies: int) -> float:
-    time = base_time * np.log(cur_floor + 1) * (1 + fatigue / 10) * (enemies / 5)
+    time = base_time + base_time * np.log(cur_floor + 1) * (1 + fatigue / 10) * (enemies / 5)
     return time
